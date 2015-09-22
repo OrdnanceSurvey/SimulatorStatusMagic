@@ -29,6 +29,7 @@
  Image: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/System/Library/Frameworks/UIKit.framework/UIKit
  */
 
+#if TARGET_IPHONE_SIMULATOR
 typedef struct {
   char boolitemIsEnabled[27];
   char timeString[64];
@@ -114,9 +115,11 @@ typedef struct {
 + (void)removeStyleOverrides:(int)arg1;
 + (void)addStyleOverrides:(int)arg1;
 @end
+#endif
 
 @implementation SDStatusBarOverriderPost9_0
 
+#if TARGET_IPHONE_SIMULATOR
 @synthesize timeString;
 @synthesize carrierName;
 @synthesize bluetoothConnected;
@@ -195,4 +198,6 @@ typedef struct {
   [UIStatusBarServer permanentizeStatusBarOverrideData];
 }
 
+#endif
 @end
+

@@ -24,19 +24,23 @@
 
 #import <Foundation/Foundation.h>
 
+#if TARGET_IPHONE_SIMULATOR
 typedef NS_ENUM(NSInteger, SDStatusBarManagerBluetoothState)
 {
   SDStatusBarManagerBluetoothHidden = 0,
   SDStatusBarManagerBluetoothVisibleDimmed,
   SDStatusBarManagerBluetoothVisibleConnected
 };
+#endif
 
 @interface SDStatusBarManager : NSObject
 
+#if TARGET_IPHONE_SIMULATOR
 @property (copy, nonatomic) NSString *carrierName;
 @property (copy, nonatomic) NSString *timeString;
 @property (assign, nonatomic, readonly) BOOL usingOverrides;
 @property (assign, nonatomic) SDStatusBarManagerBluetoothState bluetoothState;
+#endif
 
 - (void)enableOverrides;
 - (void)disableOverrides;

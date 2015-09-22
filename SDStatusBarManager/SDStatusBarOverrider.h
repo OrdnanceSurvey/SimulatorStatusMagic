@@ -26,6 +26,7 @@
 
 @protocol SDStatusBarOverrider <NSObject>
 
+#if TARGET_IPHONE_SIMULATOR
 @property (copy, nonatomic) NSString *timeString;
 @property (copy, nonatomic) NSString* carrierName;
 
@@ -35,5 +36,7 @@
 
 - (void)enableOverrides;
 - (void)disableOverrides;
+#endif
 
 @end
+
