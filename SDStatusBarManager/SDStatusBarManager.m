@@ -24,6 +24,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SDStatusBarManager.h"
+#if TARGET_IPHONE_SIMULATOR
 #import "SDStatusBarOverriderPre8_3.h"
 #import "SDStatusBarOverriderPost8_3.h"
 #import "SDStatusBarOverriderPost9_0.h"
@@ -32,15 +33,18 @@ static NSString * const SDStatusBarManagerUsingOverridesKey = @"using_overrides"
 static NSString * const SDStatusBarManagerBluetoothStateKey = @"bluetooth_state";
 static NSString * const SDStatusBarManagerTimeStringKey = @"time_string";
 
+
 @interface SDStatusBarManager ()
 @property (nonatomic, strong) NSUserDefaults *userDefaults;
 @property (nonatomic, strong) id <SDStatusBarOverrider> overrider;
 @end
+#endif
 
 @implementation SDStatusBarManager
 
 - (void)enableOverrides
 {
+#if TARGET_IPHONE_SIMULATOR
   self.usingOverrides = YES;
 
   self.overrider.timeString = [self localizedTimeString];
@@ -49,16 +53,20 @@ static NSString * const SDStatusBarManagerTimeStringKey = @"time_string";
   self.overrider.bluetoothConnected = self.bluetoothState == SDStatusBarManagerBluetoothVisibleConnected;
 
   [self.overrider enableOverrides];
+#endif
 }
 
 - (void)disableOverrides
 {
+#if TARGET_IPHONE_SIMULATOR
   self.usingOverrides = NO;
 
   [self.overrider disableOverrides];
+#endif
 }
 
 #pragma mark Properties
+#if TARGET_IPHONE_SIMULATOR
 - (BOOL)usingOverrides
 {
   return [self.userDefaults boolForKey:SDStatusBarManagerUsingOverridesKey];
@@ -144,6 +152,7 @@ static NSString * const SDStatusBarManagerTimeStringKey = @"time_string";
 
   return [formatter stringFromDate:[[NSCalendar currentCalendar] dateFromComponents:components]];
 }
+#endif
 
 #pragma mark Singleton instance
 + (SDStatusBarManager *)sharedInstance
